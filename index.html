@@ -13,21 +13,40 @@
     <!-- Navbar -->
     <nav class="navbar">
         <h1>Weather Dashboard</h1>
-        <form class="form-inline">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search for a City" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        <div>
+          <input id="SearchLocationInput" placeholder="Search for a City">
+          <button id="SearchLocation">Search</button>
+        </div>
       </nav>
       <!-- Container -->
       <div class="container">
           <!-- Primary Row -->
           <div class="row">
             <!-- Primary Col #1 -->
-            <div class="col-sm-12 col-md-4 col-lg-4">
-                <div>List of cities goes here</div>
+            <div class="col-sm-8 col-md-8 col-lg-3">
+              <button class='city' value='Aurora'>My Location</button>
+              <button class='city' value="Denver">Denver</button>
+              <button class='city' value="New York">New York</button>
+              <button class='city' value='Los Angeles'>Los Angeles</button>
+              <button class='city' value='Miami'>Miami</button>
+              <button class='city' value='Seattle'>Seattle</button>
+              <button class='city' value='Kansas City'>Kansas City</button>
+              <button class='city' value='Dallas'>Dallas</button>
+              <button class='city' value='Pittsburgh'>Pittsburgh</button>
+              <button class='city' value='Philadelphia'>Philadelphia</button>
+              <button class='city' value='London'>London</button>
+              <button class='city' value='Paris'>Paris</button>
+              <button class='city' value='Moscow'>Moscow</button>
+              <button class='city' value='Madrid'>Madrid</button>
+              <button class='city' value='Istanbul'>Istanbul</button>
+              <button class='city' value='Baghdad'>Baghdad</button>
+              <button class='city' value='Delhi'>Delhi</button>
+              <button class='city' value='Hong Kong'>Hong Kong</button>
+              <button class='city' value='Tokyo'>Tokyo</button>
+              <button class='city' value='Buenos Aires'>Buenos Aires</button>
             </div>
             <!-- Primary Col #2 -->
-            <div class="col-sm-12 col-md-8 col-lg-8">
+            <div class="col-sm-12 col-md-10 col-lg-9">
                 <div>
                   <h1 id='CurrentCity'></h1>
                   <p id='CurrentCityTemp'></p>
@@ -35,7 +54,13 @@
                   <p id='CurrentCityWS'></p>
                   <p id='CurrentCityUV'></p>
                 </div>
-                <div>5 day forcast generated via Javascript goes here</div>
+                <div class="row" id="FutureForcastDiv">
+                  <div class="FutureForcast" id="day1">Day 1</div>
+                  <div class="FutureForcast" id="day2">Day 2</div>
+                  <div class="FutureForcast" id="day3">Day 3</div>
+                  <div class="FutureForcast" id="day4">Day 4</div>
+                  <div class="FutureForcast" id="day5">Day 5</div>
+                </div>
             </div>
           </div>
       </div>
@@ -57,7 +82,9 @@
             <a href="https://vmcgargill.github.io/portfolio/" class="footerli">GitHub Portfolio</a>
           </p>
       </footer>
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script type='text/javascript' src='Assets/config.js'></script>
       <script type="text/javascript" src="Assets/scripts.js"></script>
 </body>
 </html>
