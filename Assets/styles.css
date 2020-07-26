@@ -28,7 +28,7 @@ body {
   font-size: 15px;
 }
 
-.city {
+.city, .MyLocation {
   padding: 8px 8px 8px 16px;
   text-decoration: none;
   font-size: 15px;
@@ -36,7 +36,7 @@ body {
   display: block;
   transition: 1s;
   border: 1px solid black;
-  width: 80%
+  width: 180px
 }
 
 .city:hover {
@@ -46,7 +46,7 @@ body {
 
 .FutureForcast {
   width: 150px;
-  height: 150px;
+  height: 100%;
   display: block;
   margin: 10px;
   color: white;
@@ -79,4 +79,37 @@ body {
   border-radius: 10px 10px 10px 10px;
   height: 40px;
   margin-right: 10px;
+}
+
+.greenUV, .yellowUV, .orangeUV, .redUV, .purpleUV {
+  border-radius: 5px 5px 5px 5px;
+  padding: 3px;
+}
+
+a.greenUV, a.redUV, a.purpleUV {
+  color: white;
+}
+
+a.yellowUV, a.orangeUV {
+  color: black;
+}
+
+.greenUV {
+  background-color: green;
+}
+
+.yellowUV {
+  background-color: yellow;
+}
+
+.orangeUV {
+  background-color: orange;
+}
+
+.redUV {
+  background-color: red;
+}
+
+.purpleUV {
+  background-color: purple;
 }
