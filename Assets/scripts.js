@@ -1,4 +1,4 @@
-const APIKey = config.SECRET_KEY;
+var APIKey;
 
 function GetTodaysWeather(weatherURL) {
   var CurrentDate = moment().format('dddd, MMMM Do, YYYY');
