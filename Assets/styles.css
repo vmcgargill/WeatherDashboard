@@ -39,7 +39,7 @@ body {
   width: 180px
 }
 
-.city:hover {
+.city:hover, .MyLocation:hover {
   border-color: rgb(121, 121, 121);
   background-color: #e2e2e2;
 }
