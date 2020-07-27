@@ -1,7 +1,7 @@
 var APIKey = "427dafd025ad63d9f707076c8b4e121e";
 
 function GetTodaysWeather(weatherURL) {
-  var CurrentDate = moment().format('dddd, MMMM Do, YYYY');
+  var CurrentDate = moment().format('dddd, MMMM Do, YYYY @ha');
   $.ajax({
     url: weatherURL,
     method: 'GET'
@@ -43,11 +43,14 @@ function GetWeatherForecast(forecastURL) {
     method: 'GET'
   }).then(function(response) {
     $('#FutureForcastDiv').text("");
-    for (i = 3; i < 36; i+=8) {
+    console.log(response)
+    var CurrentHour = moment().format('H');
+    console.log('Current hour: ' + CurrentHour);
+    for (i = 5; i <= 39; i+=8) {
       var day = $('<div>').attr('class', 'FutureForcast');
       $('#FutureForcastDiv').append(day);
       var Date = new moment(response.list[i].dt_txt);
-      $(day).append($('<p>').text(Date.format('dddd, MM/DD/YYYY') + " @12pm"));
+      $(day).append($('<p>').text(Date.format('dddd, MM/DD/YYYY @ha')));
       var WeatherIconURL = 'https://openweathermap.org/img/wn/' + response.list[i].weather[0].icon + '@2x.png';
       var IMG = $('<img>').attr("src", WeatherIconURL);
       IMG.width(40);
