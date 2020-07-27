@@ -1,13 +1,11 @@
-var APIKey;
+var APIKey = "427dafd025ad63d9f707076c8b4e121e";
 
 function GetTodaysWeather(weatherURL) {
   var CurrentDate = moment().format('dddd, MMMM Do, YYYY');
-
   $.ajax({
     url: weatherURL,
     method: 'GET'
   }).then(function(response) {
-    console.log(response)
     var lat = response.coord.lat;
     var lon = response.coord.lon;
     GetUVIndex(lat, lon);
@@ -51,9 +49,9 @@ function GetWeatherForecast(forecastURL) {
       var Date = new moment(response.list[i].dt_txt);
       $(day).append($('<p>').text(Date.format('dddd, MM/DD/YYYY') + " @12pm"));
       var WeatherIconURL = 'http://openweathermap.org/img/wn/' + response.list[i].weather[0].icon + '@2x.png';
-      var IMG1 = $('<img>').attr("src", WeatherIconURL);
-      IMG1.width(40);
-      $(day).append(IMG1);
+      var IMG = $('<img>').attr("src", WeatherIconURL);
+      IMG.width(40);
+      $(day).append(IMG);
       $(day).append($('<p>').text('Temp: ' + Math.floor(response.list[i].main.temp * (9/5) - 459.67) + ' °F'));
       $(day).append($('<p>').text('Humidity: ' + response.list[i].main.humidity + '%'));
     }
@@ -63,7 +61,6 @@ function GetWeatherForecast(forecastURL) {
 function GetCityWeatherData(location) {
   var weatherURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + location + '&appid=' + APIKey
   GetTodaysWeather(weatherURL);
-
   var forecastURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + location + '&appid=' + APIKey
   GetWeatherForecast(forecastURL);
 }
@@ -72,12 +69,10 @@ function GetCordWeatherData() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showLocationWeather);
   }
-  
   function showLocationWeather(position) {
     var weatherURL = 'https://api.openweathermap.org/data/2.5/weather?lat=' + 
     position.coords.latitude + '&lon=' + position.coords.longitude +'&appid=' + APIKey
     GetTodaysWeather(weatherURL);
-
     var forecastURL = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + 
     position.coords.latitude + '&lon=' + position.coords.longitude +'&appid=' + APIKey
     GetWeatherForecast(forecastURL);
