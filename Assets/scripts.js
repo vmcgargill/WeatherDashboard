@@ -17,7 +17,7 @@ function GetTodaysWeather(weatherURL) {
 }
 
 function GetUVIndex(lat, lon) {
-  var UVIndexURL = 'http://api.openweathermap.org/data/2.5/uvi?appid=' + APIKey + '&lat=' + lat + '&lon=' + lon
+  var UVIndexURL = 'https://api.openweathermap.org/data/2.5/uvi?appid=' + APIKey + '&lat=' + lat + '&lon=' + lon
   $.ajax({
     url: UVIndexURL,
     method: 'GET'
@@ -48,7 +48,7 @@ function GetWeatherForecast(forecastURL) {
       $('#FutureForcastDiv').append(day);
       var Date = new moment(response.list[i].dt_txt);
       $(day).append($('<p>').text(Date.format('dddd, MM/DD/YYYY') + " @12pm"));
-      var WeatherIconURL = 'http://openweathermap.org/img/wn/' + response.list[i].weather[0].icon + '@2x.png';
+      var WeatherIconURL = 'https://openweathermap.org/img/wn/' + response.list[i].weather[0].icon + '@2x.png';
       var IMG = $('<img>').attr("src", WeatherIconURL);
       IMG.width(40);
       $(day).append(IMG);
