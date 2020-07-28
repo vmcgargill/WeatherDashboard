@@ -1,5 +1,15 @@
 var APIKey = "427dafd025ad63d9f707076c8b4e121e";
 
+$(document).ready(function(){ 
+  function loadSuggestions(LocationArray) {
+  $('#SearchLocationInput').autocomplete({
+      lookup: LocationArray
+      });
+}
+loadSuggestions(LocationArray)
+});
+
+
 function GetTodaysWeather(weatherURL) {
   var CurrentDate = moment().format('dddd, MMMM Do, YYYY @ha');
   $.ajax({
@@ -59,7 +69,7 @@ function GetWeatherForecast(forecastURL) {
   });
 }
 
-function GetCityWeatherData(location) {
+function GetWeatherData(location) {
   var weatherURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + location + '&appid=' + APIKey
   GetTodaysWeather(weatherURL);
   var forecastURL = 'https://api.openweathermap.org/data/2.5/forecast?q=' + location + '&appid=' + APIKey
@@ -82,13 +92,13 @@ function GetCordWeatherData() {
 
 $(document).on('click','.city',function(){
   var CityValue = $(this).val();
-  GetCityWeatherData(CityValue);
+  GetWeatherData(CityValue);
 });
 
 $(document).on('click','#SearchLocation',function(){
   var LocationValue = $('#SearchLocationInput').val();
-  GetCityWeatherData(LocationValue);
+  GetWeatherData(LocationValue + ",");
 });
 
 /// Default Location ///
-GetCityWeatherData('Denver');
+GetWeatherData('Denver');

@@ -3,19 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.2.27/jquery.autocomplete.min.js"></script>
     <title>Weather Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
     crossorigin="anonymous">
     <link rel="stylesheet" href="Assets/styles.css">
+
+    
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar">
         <h1>Weather Dashboard</h1>
         <div>
-          <input id="SearchLocationInput" placeholder="Search for a City">
+          <input id="SearchLocationInput" placeholder="Search for a City" type="text">
           <button id="SearchLocation">Search</button>
+          <div id="matchlist"></div>
         </div>
       </nav>
       <!-- Container -->
@@ -79,8 +84,7 @@
           </p>
       </footer>
       <script src="Assets/lib/moment/moment.js"></script>
-      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+      <script type="text/javascript" src="Assets/search.js"></script>
       <script type="text/javascript" src="Assets/scripts.js"></script>
 </body>
 </html>
