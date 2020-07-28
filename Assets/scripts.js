@@ -6,7 +6,6 @@ function GetTodaysWeather(weatherURL) {
     url: weatherURL,
     method: 'GET'
   }).then(function(response) {
-    console.log(response)
     var lat = response.coord.lat;
     var lon = response.coord.lon;
     GetUVIndex(lat, lon);
