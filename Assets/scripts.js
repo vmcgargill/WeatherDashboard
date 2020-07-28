@@ -1,5 +1,4 @@
 var APIKey = "427dafd025ad63d9f707076c8b4e121e";
-var TimeZone = moment.tz.zone(moment.tz.guess()).abbr(360);
 
 function GetTodaysWeather(weatherURL) {
   var CurrentDate = moment().format('dddd, MMMM Do, YYYY @ha');
@@ -7,9 +6,11 @@ function GetTodaysWeather(weatherURL) {
     url: weatherURL,
     method: 'GET'
   }).then(function(response) {
+    console.log(response)
     var lat = response.coord.lat;
     var lon = response.coord.lon;
     GetUVIndex(lat, lon);
+    var TimeZone = moment.tz.zone(moment.tz.guess()).abbr(360);
     $('#CurrentCity').text(response.name + " - " + CurrentDate + " " + TimeZone);
     $('#CurrentCityTemp').text('Tempature: ' + Math.floor(response.main.temp * (9/5) - 459.67) + ' °F');
     $('#CurrentCityHum').text('Humidity: ' + response.main.humidity + '%');
@@ -48,7 +49,7 @@ function GetWeatherForecast(forecastURL) {
       var day = $('<div>').attr('class', 'FutureForcast');
       $('#FutureForcastDiv').append(day);
       var Date = new moment(response.list[i].dt_txt);
-      $(day).append($('<p>').text(Date.format('dddd, MM/DD/YYYY @ha') + ' ' + TimeZone));
+      $(day).append($('<p>').text(Date.format('dddd, MM/DD/YYYY @ha')));
       var WeatherIconURL = 'https://openweathermap.org/img/wn/' + response.list[i].weather[0].icon + '@2x.png';
       var IMG = $('<img>').attr("src", WeatherIconURL);
       IMG.width(40);
