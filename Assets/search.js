@@ -55,7 +55,7 @@ var LocationArray = [
     "Croatia", 
     "Cuba", 
     "Cyprus", 
-    "Czeck Republic", 
+    "Czech Republic", 
     "Denmark", 
     "Djibouti", 
     "Dominica", 

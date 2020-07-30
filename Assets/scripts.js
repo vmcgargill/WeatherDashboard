@@ -1,5 +1,7 @@
 var APIKey = "427dafd025ad63d9f707076c8b4e121e";
 var CurrentLocation;
+var UserLat;
+var UserLon;
 
 $(document).ready(function(){ 
   function loadSuggestions(LocationArray) {
@@ -41,7 +43,6 @@ function GetTodaysWeather(weatherURL) {
     }
     $("#LocationButton").append(button);
   }).fail(function() {
-    //Ajax request failed.
     console.log("Error message worked!")
     $("#errormsg").text('Error: ' + '"' + $('#SearchLocationInput').val() + '" is an invalid value. Please try again.')
 });
@@ -101,24 +102,54 @@ function GetCordWeatherData() {
     navigator.geolocation.getCurrentPosition(showLocationWeather);
   }
   function showLocationWeather(position) {
+    UserLat = position.coords.latitude;
+    UserLon = position.coords.longitude;
+    $('#Message').text("Lattitude: " + UserLat + ", Longitude: " + UserLon);
     var weatherURL = 'https://api.openweathermap.org/data/2.5/weather?lat=' + 
-    position.coords.latitude + '&lon=' + position.coords.longitude +'&appid=' + APIKey
+    UserLat + '&lon=' + UserLon +'&appid=' + APIKey
     GetTodaysWeather(weatherURL);
     var forecastURL = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + 
-    position.coords.latitude + '&lon=' + position.coords.longitude +'&appid=' + APIKey
+    UserLat + '&lon=' + UserLon +'&appid=' + APIKey
     GetWeatherForecast(forecastURL);
   }
 }
 
 function LoadLocations() {
-  const LocationList = $("#LocationList")
+  const LocationList = $("#LocationList");
   LocationList.html("");
-  var h2 = $("<h2>");
-  h2.text("Locations:");
+
+  var settingsh2 = $("<h2>");
+  settingsh2.text("Settings:");
+  LocationList.append(settingsh2);
+
+  var SetDefaultButton = $("<button>");
+  SetDefaultButton.attr("class", "settingbtn");
+  SetDefaultButton.attr("id", "SetDefaultButton");
+  SetDefaultButton.text("Set Current Location As Default Location");
+  LocationList.append(SetDefaultButton);
+
+  var CoordDefaultButton = $("<button>");
+  CoordDefaultButton.attr("class", "settingbtn");
+  CoordDefaultButton.attr("id", "CoordDefaultButton");
+  CoordDefaultButton.text("Make My Device Location The Default Location");
+  LocationList.append(CoordDefaultButton);
+
+  var ResetDefaultButton = $("<button>");
+  ResetDefaultButton.attr("class", "settingbtn");
+  ResetDefaultButton.attr("id", "ResetDefaultButton");
+  ResetDefaultButton.text("Reset All Default Settings");
+  LocationList.append(ResetDefaultButton);
+
+  var br = $("<br>");
+  LocationList.append(br);
+
+  var locationh2 = $("<h2>");
+  locationh2.text("Locations:");
+  LocationList.append(locationh2);
+
   var MyLocationbtn = $("<button>");
   MyLocationbtn.attr("class", "MyLocation");
   MyLocationbtn.text("My Location");
-  LocationList.append(h2);
   LocationList.append(MyLocationbtn);
 
   var GetLocations = localStorage.getItem("Locations");
@@ -145,11 +176,13 @@ function LoadLocations() {
 }
 
 $(document).on('click','.location',function(){
-  var CityValue = $(this).val();
-  GetWeatherData(CityValue);
+  $('#Message').text("");
+  var LocationValue = $(this).val();
+  GetWeatherData(LocationValue);
 });
 
 $(document).on('click','#SearchLocationbtn',function(){
+  $('#Message').text("");
   var LocationValue = $('#SearchLocationInput').val();
   GetWeatherData(LocationValue + ",");
 });
@@ -180,9 +213,52 @@ $(document).on('click','#RemoveLocationbtn',function(){
   }
 });
 
-/// Load Defults ///
-GetWeatherData('Denver');
-LoadLocations();
+$(document).on('click','#SetDefaultButton',function(){
+  var DefaultLocation = localStorage.getItem("DefaultLocation");
+  
+  if (DefaultLocation === CurrentLocation) {
+    $("#Message").text(CurrentLocation + " has already been set as the default location.");
+  } else {
+    localStorage.setItem("DefaultLocation", CurrentLocation);
+    GetWeatherData(CurrentLocation);
+    $("#Message").text(CurrentLocation + " has been set as the default location when the page loads.");
+  }
+});
 
-// Clear storage function that is used for testing purposes when I need to clear the local storage.
-// localStorage.clear()
+$(document).on('click','#CoordDefaultButton',function(){
+  var DefaultLocation = localStorage.getItem("DefaultLocation");
+
+  if (DefaultLocation === "UserCoordinatesDefault") {
+    $("#Message").text("Your device location coordinates has already been set as the default location.");
+  } else {
+    localStorage.setItem("DefaultLocation", "UserCoordinatesDefault");
+    GetCordWeatherData();
+    $("#Message").text("Your device location coordinates has been set as the default location when the page loads.");
+  }
+});
+
+$(document).on('click','#ResetDefaultButton',function(){
+  var UserConfirm = confirm("Do you wish to restore all settings to their defaults? This cannot be undone.");
+  if (UserConfirm === true) {
+    localStorage.removeItem("Locations");
+    localStorage.removeItem("DefaultLocation");
+    GetWeatherData('Denver');
+    LoadLocations();
+    $("#Message").text("All settings have been restored to the default.");
+  }
+});
+
+/// Load Defults ///
+function LoadDefaults() {
+  var DefaultLocation = localStorage.getItem("DefaultLocation");
+
+  if (DefaultLocation === null) {
+    GetWeatherData('Denver');
+  } else if (DefaultLocation === "UserCoordinatesDefault") {
+    GetCordWeatherData();
+  } else {
+    GetWeatherData(DefaultLocation);
+  }
+  LoadLocations();
+}
+LoadDefaults();
