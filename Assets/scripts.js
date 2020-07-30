@@ -104,7 +104,7 @@ function GetCordWeatherData() {
   function showLocationWeather(position) {
     UserLat = position.coords.latitude;
     UserLon = position.coords.longitude;
-    $('#Message').text("Lattitude: " + UserLat + ", Longitude: " + UserLon);
+    $('#Message').text("Latitude: " + UserLat + ", Longitude: " + UserLon);
     var weatherURL = 'https://api.openweathermap.org/data/2.5/weather?lat=' + 
     UserLat + '&lon=' + UserLon +'&appid=' + APIKey
     GetTodaysWeather(weatherURL);
@@ -125,7 +125,7 @@ function LoadLocations() {
   var SetDefaultButton = $("<button>");
   SetDefaultButton.attr("class", "settingbtn");
   SetDefaultButton.attr("id", "SetDefaultButton");
-  SetDefaultButton.text("Set Current Location As Default Location");
+  SetDefaultButton.text("Set This As Default Location");
   LocationList.append(SetDefaultButton);
 
   var CoordDefaultButton = $("<button>");
@@ -217,7 +217,7 @@ $(document).on('click','#SetDefaultButton',function(){
   var DefaultLocation = localStorage.getItem("DefaultLocation");
   
   if (DefaultLocation === CurrentLocation) {
-    $("#Message").text(CurrentLocation + " has already been set as the default location.");
+    $("#errormsg").text(CurrentLocation + " has already been set as the default location.");
   } else {
     localStorage.setItem("DefaultLocation", CurrentLocation);
     GetWeatherData(CurrentLocation);
@@ -229,10 +229,10 @@ $(document).on('click','#CoordDefaultButton',function(){
   var DefaultLocation = localStorage.getItem("DefaultLocation");
 
   if (DefaultLocation === "UserCoordinatesDefault") {
-    $("#Message").text("Your device location coordinates has already been set as the default location.");
+    $("#errormsg").text("Your device location coordinates has already been set as the default location.");
   } else {
     localStorage.setItem("DefaultLocation", "UserCoordinatesDefault");
-    GetCordWeatherData();
+    // GetCordWeatherData();
     $("#Message").text("Your device location coordinates has been set as the default location when the page loads.");
   }
 });
