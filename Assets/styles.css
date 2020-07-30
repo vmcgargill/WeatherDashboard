@@ -28,7 +28,7 @@ body {
   font-size: 15px;
 }
 
-.city, .MyLocation {
+.location, .MyLocation {
   padding: 8px 8px 8px 16px;
   text-decoration: none;
   font-size: 15px;
@@ -39,7 +39,7 @@ body {
   width: 180px
 }
 
-.city:hover, .MyLocation:hover {
+.location:hover, .MyLocation:hover {
   border-color: rgb(121, 121, 121);
   background-color: #e2e2e2;
 }
@@ -60,19 +60,46 @@ body {
   background-color: #3c66dbcc;
 }
 
-#SearchLocation {
-  background-color: white; 
-  color: black; 
-  border: 2px solid darkred;
+.button {
   transition-duration: 1s;
   border-radius: 10px 10px 10px 10px;
-  width: 80px;
   height: 40px;
+
 }
 
-#SearchLocation:hover {
+#SearchLocationbtn {
+  background-color: white; 
+  border: 2px solid darkred;
+}
+
+#SearchLocationbtn:hover {
   background-color: darkred;
   color: white;
+}
+
+#AddLocationbtn, #RemoveLocationbtn {
+  margin: 0 auto;
+  display: block;
+}
+
+#AddLocationbtn {
+  color: white;
+  background-color: rgb(30, 30, 97);
+}
+
+#AddLocationbtn:hover {
+  color: black;
+  background-color: rgba(81, 81, 255, 0.5);
+}
+
+#RemoveLocationbtn {
+  color: white;
+  background-color: darkred;
+}
+
+#RemoveLocationbtn:hover {
+  color: black;
+  background-color: rgba(255, 0, 0, 0.5);
 }
 
 #SearchLocationInput {
@@ -114,9 +141,38 @@ a.yellowUV, a.orangeUV {
   background-color: purple;
 }
 
-.autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
-.autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
-.autocomplete-selected { background: #F0F0F0; }
-.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
-.autocomplete-group { padding: 2px 5px; }
-.autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
+.autocomplete-suggestions { 
+  border: 1px solid #999; 
+  background: #FFF; 
+  overflow: auto; 
+}
+
+.autocomplete-suggestion { 
+  padding: 2px 5px; 
+  white-space: nowrap; 
+  overflow: hidden; 
+}
+
+.autocomplete-selected { 
+  background: #F0F0F0; 
+}
+
+.autocomplete-suggestions strong { 
+  font-weight: normal; 
+  color: #3399FF; 
+}
+
+.autocomplete-group { 
+  padding: 2px 5px; 
+}
+
+.autocomplete-group strong { 
+  display: block; 
+  border-bottom: 1px solid #000; 
+}
+
+#errormsg {
+  color: darkred;
+  font-weight: bold;
+  font-size: 20px;
+}

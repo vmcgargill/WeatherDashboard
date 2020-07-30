@@ -19,8 +19,8 @@
         <h1>Weather Dashboard</h1>
         <div>
           <input id="SearchLocationInput" placeholder="Search for a City" type="text">
-          <button id="SearchLocation">Search</button>
-          <div id="matchlist"></div>
+          <button id="SearchLocationbtn" class="button">Search</button>
+          <div id="errormsg"></div>
         </div>
       </nav>
       <!-- Container -->
@@ -28,40 +28,19 @@
           <!-- Primary Row -->
           <div class="row">
             <!-- Primary Col #1 -->
-            <div class="col-sm-8 col-md-8 col-lg-3">
-              <h2>Cities:</h2>
-              <button class='MyLocation' onclick="GetCordWeatherData()">My Location</button>
-              <button class='city' value="Denver">Denver</button>
-              <button class='city' value="New York">New York</button>
-              <button class='city' value='Los Angeles'>Los Angeles</button>
-              <button class='city' value='Miami'>Miami</button>
-              <button class='city' value='Seattle'>Seattle</button>
-              <button class='city' value='Kansas City'>Kansas City</button>
-              <button class='city' value='Chicago'>Chicago</button>
-              <button class='city' value='Dallas'>Dallas</button>
-              <button class='city' value='Pittsburgh'>Pittsburgh</button>
-              <button class='city' value='Philadelphia'>Philadelphia</button>
-              <button class='city' value='London'>London</button>
-              <button class='city' value='Paris'>Paris</button>
-              <button class='city' value='Moscow'>Moscow</button>
-              <button class='city' value='Madrid'>Madrid</button>
-              <button class='city' value='Istanbul'>Istanbul</button>
-              <button class='city' value='Baghdad'>Baghdad</button>
-              <button class='city' value='Delhi'>Delhi</button>
-              <button class='city' value='Hong Kong'>Hong Kong</button>
-              <button class='city' value='Tokyo'>Tokyo</button>
-              <button class='city' value='Buenos Aires'>Buenos Aires</button>
+            <div class="col-sm-8 col-md-8 col-lg-3" id="LocationList">
             </div>
             <!-- Primary Col #2 -->
             <div class="col-sm-12 col-md-10 col-lg-9">
                 <div>
-                  <h1 id='CurrentCity'></h1>
-                  <p id='CurrentCityTemp'></p>
-                  <p id='CurrentCityHum'></p>
-                  <p id='CurrentCityWS'></p>
-                  <p id='CurrentCityUV'></p>
+                  <h1 id='CurrentLocation'></h1>
+                  <p id='CurrentLocationTemp'></p>
+                  <p id='CurrentLocationHum'></p>
+                  <p id='CurrentLocationWS'></p>
+                  <p id='CurrentLocationUV'></p>
                 </div>
                 <div class="row" id="FutureForcastDiv"></div>
+                <div id="LocationButton"></div>
             </div>
           </div>
       </div>

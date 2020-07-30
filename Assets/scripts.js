@@ -1,4 +1,5 @@
 var APIKey = "427dafd025ad63d9f707076c8b4e121e";
+var CurrentLocation;
 
 $(document).ready(function(){ 
   function loadSuggestions(LocationArray) {
@@ -9,22 +10,41 @@ $(document).ready(function(){
 loadSuggestions(LocationArray)
 });
 
-
 function GetTodaysWeather(weatherURL) {
   var CurrentDate = moment().format('dddd, MMMM Do, YYYY @ha');
   $.ajax({
     url: weatherURL,
     method: 'GET'
   }).then(function(response) {
+    $('#SearchLocationInput').val("");
+    $("#errormsg").text("");
+    CurrentLocation = response.name;
     var lat = response.coord.lat;
     var lon = response.coord.lon;
     GetUVIndex(lat, lon);
     var TimeZone = moment.tz.zone(moment.tz.guess()).abbr(360);
-    $('#CurrentCity').text(response.name + " - " + CurrentDate + " " + TimeZone);
-    $('#CurrentCityTemp').text('Tempature: ' + Math.floor(response.main.temp * (9/5) - 459.67) + ' °F');
-    $('#CurrentCityHum').text('Humidity: ' + response.main.humidity + '%');
-    $('#CurrentCityWS').text('Wind Speed: ' + response.wind.speed + ' MPH');
-  });
+    $('#CurrentLocation').text(response.name + " - " + CurrentDate + " " + TimeZone);
+    $('#CurrentLocationTemp').text('Tempature: ' + Math.floor(response.main.temp * (9/5) - 459.67) + ' °F');
+    $('#CurrentLocationHum').text('Humidity: ' + response.main.humidity + '%');
+    $('#CurrentLocationWS').text('Wind Speed: ' + response.wind.speed + ' MPH');
+    $("#LocationButton").html("");
+    var button = $("<button>");
+    button.attr("class", "button")
+
+    var Locations = JSON.parse(localStorage.getItem("Locations"));
+    if (Locations.includes(CurrentLocation) === false) {
+      button.attr("id", "AddLocationbtn")
+      button.text("Add location")
+    } else {
+      button.attr("id", "RemoveLocationbtn")
+      button.text("Remove location")
+    }
+    $("#LocationButton").append(button);
+  }).fail(function() {
+    //Ajax request failed.
+    console.log("Error message worked!")
+    $("#errormsg").text('Error: ' + '"' + $('#SearchLocationInput').val() + '" is an invalid value. Please try again.')
+});
 }
 
 function GetUVIndex(lat, lon) {
@@ -33,7 +53,7 @@ function GetUVIndex(lat, lon) {
     url: UVIndexURL,
     method: 'GET'
   }).then(function(response) {
-    const CurrentCityUV = $('#CurrentCityUV');
+    const CurrentCityUV = $('#CurrentLocationUV');
     if (response.value <= 2) {
       CurrentCityUV.html("UV Index: " + '<a class="greenUV">' + response.value + '</a>');
     } else if (response.value > 2 && response.value < 5) {
@@ -90,15 +110,79 @@ function GetCordWeatherData() {
   }
 }
 
-$(document).on('click','.city',function(){
+function LoadLocations() {
+  const LocationList = $("#LocationList")
+  LocationList.html("");
+  var h2 = $("<h2>");
+  h2.text("Locations:");
+  var MyLocationbtn = $("<button>");
+  MyLocationbtn.attr("class", "MyLocation");
+  MyLocationbtn.text("My Location");
+  LocationList.append(h2);
+  LocationList.append(MyLocationbtn);
+
+  var GetLocations = localStorage.getItem("Locations");
+  let LocationsArray;
+
+  if (GetLocations === null) {
+    LocationsArray = [
+      "Denver",
+      "New York",
+      "Los Angeles"
+    ]
+    localStorage.setItem("Locations", JSON.stringify(LocationsArray));
+  } else {
+    LocationsArray = JSON.parse(GetLocations);
+  }
+
+  for (i = 0; i <= LocationsArray.length - 1; i++) {
+    var button = $("<button>");
+    button.attr("class", "location");
+    button.val(LocationsArray[i]);
+    button.text(LocationsArray[i]);
+    LocationList.append(button);
+  }
+}
+
+$(document).on('click','.location',function(){
   var CityValue = $(this).val();
   GetWeatherData(CityValue);
 });
 
-$(document).on('click','#SearchLocation',function(){
+$(document).on('click','#SearchLocationbtn',function(){
   var LocationValue = $('#SearchLocationInput').val();
   GetWeatherData(LocationValue + ",");
 });
 
-/// Default Location ///
+$(document).on('click','.MyLocation',function(){
+  GetCordWeatherData();
+});
+
+$(document).on('click','#AddLocationbtn',function(){
+  var Locations = JSON.parse(localStorage.getItem("Locations"));
+  if (Locations.includes(CurrentLocation) === false) {
+    console.log(Locations);
+    Locations.push(CurrentLocation);
+    localStorage.setItem("Locations", JSON.stringify(Locations));
+    LoadLocations();
+    GetWeatherData(CurrentLocation);
+  }
+});
+
+$(document).on('click','#RemoveLocationbtn',function(){
+  var Locations = JSON.parse(localStorage.getItem("Locations"));
+  if (Locations.includes(CurrentLocation) === true) {
+    var id = Locations.indexOf(CurrentLocation);
+    Locations.splice(id, 1);
+    localStorage.setItem("Locations", JSON.stringify(Locations));
+    LoadLocations();
+    GetWeatherData(CurrentLocation);
+  }
+});
+
+/// Load Defults ///
 GetWeatherData('Denver');
+LoadLocations();
+
+// Clear storage function that is used for testing purposes when I need to clear the local storage.
+// localStorage.clear()
