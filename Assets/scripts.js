@@ -4,9 +4,9 @@ var UserLat;
 var UserLon;
 
 $(document).ready(function(){ 
-  function loadSuggestions(LocationArray) {
+  function loadSuggestions(a) {
   $('#SearchLocationInput').autocomplete({
-      lookup: LocationArray
+      lookup: a
       });
 }
 loadSuggestions(LocationArray)
@@ -21,6 +21,7 @@ function GetTodaysWeather(weatherURL) {
     $('#SearchLocationInput').val("");
     $("#errormsg").text("");
     CurrentLocation = response.name;
+    $("#SetDefaultButton").text("Set " + CurrentLocation + " As Default Location");
     var lat = response.coord.lat;
     var lon = response.coord.lon;
     GetUVIndex(lat, lon);
@@ -125,7 +126,7 @@ function LoadLocations() {
   var SetDefaultButton = $("<button>");
   SetDefaultButton.attr("class", "settingbtn");
   SetDefaultButton.attr("id", "SetDefaultButton");
-  SetDefaultButton.text("Set This As Default Location");
+  SetDefaultButton.text("Set As Default Location");
   LocationList.append(SetDefaultButton);
 
   var CoordDefaultButton = $("<button>");
@@ -232,7 +233,6 @@ $(document).on('click','#CoordDefaultButton',function(){
     $("#errormsg").text("Your device location coordinates has already been set as the default location.");
   } else {
     localStorage.setItem("DefaultLocation", "UserCoordinatesDefault");
-    // GetCordWeatherData();
     $("#Message").text("Your device location coordinates has been set as the default location when the page loads.");
   }
 });
@@ -250,6 +250,7 @@ $(document).on('click','#ResetDefaultButton',function(){
 
 /// Load Defults ///
 function LoadDefaults() {
+  LoadLocations();
   var DefaultLocation = localStorage.getItem("DefaultLocation");
 
   if (DefaultLocation === null) {
@@ -259,6 +260,5 @@ function LoadDefaults() {
   } else {
     GetWeatherData(DefaultLocation);
   }
-  LoadLocations();
 }
 LoadDefaults();
